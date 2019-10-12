@@ -1,0 +1,27 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head"></head>
+<body>
+<header th:replace="fragments/menu :: header"></header>
+<main id="main-container" class="container loginpage">
+    <h1>Log In to Your Account</h1>
+    <form method="post" th:action="@{'/login'}">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="iconuser"><i class="fas fa-user fa-fw"></i></span>
+            </div>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="iconuser" required>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="iconpass"><i class="fa fa-key fa-fw"></i></span>
+            </div>
+            <input type="password"  id="password" name="password" class="form-control" placeholder="Username" aria-label="Password" aria-describedby="iconpass" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+    </form>
+    <p id="registerInfo">Need an account? <a th:href="@{'/register'}">Sign up</a></p>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

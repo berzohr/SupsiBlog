@@ -1,0 +1,61 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: head"></head>
+<body>
+<header th:replace="fragments/menu :: header"></header>
+<main id="main-container" class="container">
+    <div class="row">
+        <article class="col-8">
+            <h1 th:text="${blogPost.getTitle()}">Blogpost Title</h1>
+            <section>
+                <p th:text="${blogPost.getText()}">Post content</p>
+                <footer>
+                    <p>Posted by
+                        <span th:text="${blogPost.getUser().getUsername()}"></span>
+                        on
+                        <time th:datetime="${blogPost.getDate()}" th:text="${#dates.format(blogPost.getDate(), 'dd-MM-yyyy HH:mm')}">January 01, 2018 at 00:00am</time>
+                        <span class="postCategory" th:text="'#'+${blogPost.getCategory().getName()}">Category Name</span>
+                    </p>
+                </footer>
+            </section>
+            <div>
+                <h3>Comments</h3>
+                <div sec:authorize="isAuthenticated()">
+                    <a th:href="@{'/blog/'+${blogPost.getId()}+'/comment'}" class="btn btn-danger btn-sm"><i class="fas fa-plus"></i> Comment</a>
+                </div>
+                <div th:if="${quotes.size() != 0}">
+                    <section th:each="quote : ${quotes}">
+                        <header>
+                            <span th:text="${quote.getUser().getUsername()}">User username</span> |
+                            <time th:datetime="${quote.getDate()}" th:text="${#dates.format(quote.getDate(), 'dd-MM-yyyy HH:mm')}"></time>
+                        </header>
+                        <main>
+                            <p th:text="${quote.getText()}"></p>
+                        </main>
+                        <footer sec:authorize="isAuthenticated()">
+                            <a href="#" class="btn btn-warning btn-sm"> Reply</a>
+                        </footer>
+                    </section>
+                </div>
+            </div>
+        </article>
+        <aside class="col-4">
+            <div sec:authorize="isAuthenticated()" th:replace="fragments/userPannel::div"></div>
+            <section th:if="${#authentication.name.equals(blogPost.getUser().getUsername()) ||  #authorization.expression('hasRole(''ADMIN'')')}" id="controlPanel">
+                <h3>Control panel</h3>
+                <p><a th:href="@{'/blog/'+${blogPost.getId()}+'/edit'}" href="" class="btn btn-primary btn-block"><i class="fas fa-pen"></i> Modify</a></p>
+                <p sec:authorize="hasRole('ADMIN')"><a th:href="@{'/blog/'+${blogPost.getId()}+'/delete'}" href="" class="btn btn-danger btn-block"><i class="fas fa-trash"></i> Delete</a></p>
+                <hr>
+            </section>
+            <div class="category-list">
+                <h3>Categories</h3>
+                <p th:each="category : ${categories}"><a th:text="${category.getName()}" th:href="@{'/category/'+${category.getId()}}">categoria</a></p>
+            </div>
+            <h3>Quote of the day</h3>
+            <p>“One man’s “magic” is another man’s engineering. “Supernatural” is a null word.”<br>--Robert A. Heinlein</p>
+        </aside>
+    </div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<header xmlns:th="http://www.thymeleaf.org" th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
+    <img th:src="@{'/images/supsi-logo.svg'}" alt="Supsi blog logo">
+    <nav>
+        <a th:href="@{'/'}">Home</a> |
+        <a th:case="${false}" th:href="@{'/login'}">Login</a>
+        <span th:case="${true}">
+            <a  th:href="@{'/blog/new'}">New post</a> |
+            <a  th:href="@{'/logout'}">Logout</a>
+            <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{'/admin'}">| Admin pannel</a>
+        </span>
+
+        <div>
+            <form id="searchForm" th:action="@{'/blog/search'}" >
+                <input type="text" name="q" placeholder="search bar" id="searchBar">
+                <button type="button" id="getRequest" onclick="search()">Search</button>
+            </form>
+        </div>
+    </nav>
+</header>

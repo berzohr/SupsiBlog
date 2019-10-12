@@ -1,0 +1,59 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: head"></head>
+<body>
+<header th:replace="fragments/menu :: header"></header>
+<main id="main-container" class="container">
+    <div class="row">
+        <article class="col-8">
+            <h1>Edit new Blogpost</h1>
+            <form th:action="@{'/blog/'+${blogPost.getId()}+'/edit'}" action="" method="post" class="form-group">
+                <table class="col-11">
+                    <tr>
+                        <td class="col_left"><label>Title</label></td>
+                        <td class="col_right"><input type="text" name="title" class="form-control"
+                                                     th:value="${blogPost.getTitle()}" placeholder="Blogpost title"
+                                                     required></td>
+                    </tr>
+                    <tr>
+                        <td class="col_left"><label>Category</label></td>
+                        <td class="col_right"><select name="category" class="form-control">
+                            <option th:each="category : ${categories}" th:value="${category.getId()}"
+                                    th:text="${category.getName()}"
+                                    th:if="${blogPost.getCategory().getName() == category.getName()}"
+                                    selected>Category username
+                            </option>
+                            <option th:each="category : ${categories}" th:value="${category.getId()}"
+                                    th:text="${category.getName()}"
+                                    th:unless="${blogPost.getCategory().getName() == category.getName()}">Category username
+                            </option>
+                        </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col_left"><label>Text</label></td>
+                        <td class="col_right"><textarea class="form-control" th:text="${blogPost.getText()}" name="text"
+                                                        rows="10" required></textarea></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="col_submit">
+                            <button type="submit">Save</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </article>
+        <aside class="col-4">
+            <div sec:authorize="isAuthenticated()" th:replace="fragments/userPannel::div"></div>
+            <div class="category-list">
+                <h3>Categories</h3>
+                <p th:each="category : ${categories}"><a th:text="${category.getName()}" th:href="@{'/category/'+${category.getId()}}">categoria</a></p>
+            </div>
+            <h3>Quote of the day</h3>
+            <p>"Software is a great combination between artistry and engineering"<br>--Bill Gates</p>
+        </aside>
+    </div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

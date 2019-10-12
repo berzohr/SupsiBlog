@@ -1,0 +1,47 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: head"></head>
+<body>
+<header th:replace="fragments/menu :: header"></header>
+<main id="main-container" class="container">
+    <div class="row">
+        <article class="col-8">
+            <h1 th:text="${categoryName}">All posts</h1>
+            <section th:each="blogPost : ${blogPosts}" th:if="${blogPost.isVisible()}">
+                <header><h2><a th:href="@{'/blog/'+${blogPost.getId()}}" th:text="${blogPost.getTitle()}">Title</a></h2>
+                </header>
+                <p th:text="${#strings.replace(blogPost.getText(), '\r\n', '<br />')+'...'}">Preview from post</p>
+
+                    <!--TODO: da far vedere solo le prime 4 parole -->
+                <footer>
+                    <p>Posted by
+                        <span th:text="${blogPost.getUser().getUsername()}"></span>
+                        on
+                        <time th:datetime="${blogPost.getDate()}"
+                              th:text="${#dates.format(blogPost.getDate(), 'dd-MM-yyyy HH:mm')}">January 01, 2018 at
+                            00:00am
+                        </time>
+                        <span class="postCategory"><a th:href="@{'/category/'+${blogPost.getCategory().getId()}}"
+                                                      th:text="'#'+${blogPost.getCategory().getName()}">Category Name</a></span>
+                    </p>
+                </footer>
+            </section>
+        </article>
+        <aside class="col-4">
+            <div sec:authorize="isAuthenticated()" th:replace="fragments/userPannel::div"></div>
+            <div class="category-list">
+                <h3>Categories</h3>
+                <p th:each="category : ${categories}"><a th:text="${category.getName()}"
+                                                         th:href="@{'/category/'+${category.getId()}}">categoria</a></p>
+            </div>
+            <hr>
+            <h3>Quote of the day</h3>
+            <p>"If you don't have time to read, you don't have the time (or the tools) to write. Simple as that."<br>--Stephen
+                King</p>
+        </aside>
+    </div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+
+</body>
+</html>

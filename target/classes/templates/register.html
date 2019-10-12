@@ -1,0 +1,56 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head"></head>
+<body>
+<header th:replace="fragments/menu :: header"></header>
+<main id="main-container" class="container loginpage">
+    <h1>Create an account</h1>
+    <form method="post" th:action="@{'/register'}" id="registerForm">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="iconname"><i class="fas fa-info-circle"></i></span>
+            </div>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="iconname" required>
+            <span id="nameValid"></span>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="iconsurname"><i class="fas fa-info-circle"></i></span>
+            </div>
+            <input type="text" id="surname" name="surname" class="form-control" placeholder="Surname" aria-label="Surname" aria-describedby="iconsurname" required>
+            <span id="surnameValid"></span>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="iconuser"><i class="fas fa-user fa-fw"></i></span>
+            </div>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="iconuser" required>
+            <span id="usernameValid"></span>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="iconpass"><i class="fa fa-key fa-fw"></i></span>
+            </div>
+            <input type="password"  id="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="iconpass" required>
+            <span id="passwordValid"></span>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="iconpass2"><i class="fa fa-key fa-fw"></i></span>
+            </div>
+            <input type="password"  id="confirmPassword" class="form-control" placeholder="Confirm Password" aria-label="Confirm Password" aria-describedby="iconpass2" required>
+            <span id="confirmPasswordValid"></span>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="iconemail"><i class="fa fa-at fa-fw"></i></span>
+            </div>
+            <input type="text"  id="email" name="email" class="form-control" placeholder="email" aria-label="Email" aria-describedby="iconemail" required>
+            <span id="emailValid"></span>
+        </div>
+    </form>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+<script th:src="@{/js/validation.js}"></script>
+</body>
+</html>

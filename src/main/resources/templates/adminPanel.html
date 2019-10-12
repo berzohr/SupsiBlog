@@ -1,0 +1,86 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: head"></head>
+<body>
+<header th:replace="fragments/menu :: header"></header>
+<main id="main-container" class="container">
+
+    <h1>Admin Panel</h1>
+    <div class="row">
+        <section class="left-bar col-3">
+            <p><a href="#" onclick="showUsers()" id="userBtn"><i class="fas fa-user"></i> Users</a></p>
+            <p><a href="#" onclick="showCategories()" id="categoryBtn"><i class="fas fa-book"></i> Categories</a></p>
+            <p><a href="#" onclick="showPosts()" id="postBtn"><i class="fas fa-newspaper"></i> Posts</a></p>
+        </section>
+        <section class="right-bar col-9">
+            <div class="tableData" id="uTable">
+                <table id="usersTable">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.getId()}">user id</td>
+                        <td th:text="${user.getUsername()}">username of user</td>
+                        <td th:text="${user.getEmail()}">user@email.com</td>
+                        <td th:text="${user.getRole().getName()}">ROLE_ANY</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tableData hide" id="cTable">
+                <table id="categoriesTable">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="category : ${categories}">
+                        <td th:text="${category.getId()}">id category</td>
+                        <td th:text="${category.getName()}">username of category</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tableData hide" id="pTable">
+                <table id="postsTable">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>User</th>
+                        <th>Visible</th>
+                        <th>Last change</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="post : ${blogPosts}">
+                        <td th:text="${post.getId()}">Post id</td>
+                        <td>
+                            <a th:if="${post.isVisible()}" th:href="@{'/blog/'+${post.getId()}}" th:text="${post.getTitle()}">Post title</a>
+                            <a th:if="${!post.isVisible()}" th:href="@{'/blog/'+${post.getId()}+'/trash'}" th:text="${post.getTitle()}">Post title</a>
+                        </td>
+                        <td th:text="${post.getCategory().getName()}">Post category</td>
+                        <td th:text="${post.getUser().getUsername()}">User username</td>
+                        <td th:text="${post.isVisible()}">Is visible?</td>
+                        <td th:text="${post.getDate()}">Last update</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+    </div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+<script th:src="@{/js/tables.js}"></script>
+</body>
+</html>

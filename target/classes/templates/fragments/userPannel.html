@@ -1,0 +1,14 @@
+<!--<div xmlns:th="http://www.thymeleaf.org" class="userPannel" th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">-->
+    <!--<div th:case="${true}">-->
+        <!--<p>Welcome <b th:text="${#authentication.username}">user</b></p>-->
+        <!--<a class="btn btn-info btn-block" th:href="@{/logout}" role="button">Logout</a>-->
+    <!--</div>-->
+    <!--<div th:case="${false}">-->
+        <!--<a class="btn btn-info btn-block" th:href="@{/login}" role="button">Login</a>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div xmlns:th="http://www.thymeleaf.org" class="userPannel">
+        <p>Welcome <b th:text="${#authentication.name}">user</b></p>
+    <hr>
+</div>
